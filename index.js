@@ -83,10 +83,10 @@ function verify(req, res) {
     var query = url_parts.query;
     if (query.hasOwnProperty('hub.verify_token')) {
         if (query['hub.verify_token'] !== config.verifyToken) {
-            console.log('Invalid token.')
+            console.log('Invalid token.');
             return res.send(404);
         }
-        console.log('Verified')
+        console.log('Verified');
         return res.send(query['hub.challenge']);
     }
 }
