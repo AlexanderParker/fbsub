@@ -133,6 +133,24 @@ function getSubscriptions(callback, scope) {
     });
 }
 
+
+// Retrieve feed from specified page
+function getPageFeed(callback, page) {
+    https.get({
+        host: FACEBOOK_GRAPH_URL,
+        path: '/' + page + '/feed?access_token=' + getAccessToken()
+    }, function(res) {
+        var data = "";
+        res.on('data', function(chunk) {
+            data += chunk;
+        }).on('end', function() {
+            callback(JSON.parse(data));
+        }).on('error', function(e) {
+            callback(e.message);
+        });
+    });
+}
+
 module.exports = {
     init: init,
     authenticate: authenticate,
@@ -140,5 +158,6 @@ module.exports = {
     unSubscribe: unSubscribe,
     verify: verify,
     getAccessToken: getAccessToken,
-    getSubscriptions: getSubscriptions
+    getSubscriptions: getSubscriptions,
+    getPageFeed: getPageFeed
 };
